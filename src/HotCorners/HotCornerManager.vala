@@ -93,7 +93,7 @@ public class Gala.HotCornerManager : Object {
             command = line;
         } else {
             // find specific actions
-            foreach (unowned var part in parts) {
+            foreach (var part in parts) {
                 var details = part.split (":");
                 if (details[0] == hot_corner_position) {
                     command = details[1];
