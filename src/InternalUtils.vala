@@ -339,6 +339,7 @@ namespace Gala {
             return (int) Math.round (value * scale_factor) / scale_factor;
         }
 
+/*
         private static Gtk.StyleContext selection_style_context = null;
         public static Gdk.RGBA get_theme_accent_color () {
             if (selection_style_context == null) {
@@ -355,7 +356,15 @@ namespace Gala {
                 Gtk.StateFlags.NORMAL
             );
         }
+*/
 
+        public static Gdk.RGBA get_theme_accent_color () {
+			Gdk.RGBA rgba =  { 255, 255, 255, 1.0 }; // FIXME initialize color
+			return rgba;
+		}
+
+
+/*
         public static Drawing.Color get_accent_color_by_theme_name (string theme_name) {
             var label_widget_path = new Gtk.WidgetPath ();
             label_widget_path.append_type (GLib.Type.from_name ("label"));
@@ -373,6 +382,12 @@ namespace Gala {
 
             return new Drawing.Color.from_rgba (rgba);
         }
+*/
+
+        public static Drawing.Color get_accent_color_by_theme_name (string theme_name) {
+			Gdk.RGBA rgba =  { 255, 255, 255, 1.0 }; // FIXME initialize color
+            return new Drawing.Color.from_rgba (rgba);
+		}
 
         /**
          * Returns the workspaces geometry following the only_on_primary settings.

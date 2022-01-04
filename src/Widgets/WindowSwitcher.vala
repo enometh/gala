@@ -95,6 +95,7 @@ namespace Gala {
             widget_path.append_type (typeof (Gtk.Window));
             widget_path.iter_set_object_name (-1, "window");
 
+/*
             var style_context = new Gtk.StyleContext ();
             style_context.set_scale (scaling_factor);
             style_context.set_path (widget_path);
@@ -110,6 +111,7 @@ namespace Gala {
 
             style_context.render_background (ctx, 0, 0, width, height);
             style_context.render_frame (ctx, 0, 0, width, height);
+*/
             ctx.restore ();
 
             return true;
