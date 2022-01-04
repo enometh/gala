@@ -1,0 +1,56 @@
+// method/virtual-method/signal don't match
+
+/*
+Clutter-9.gir:569.7-569.17: warning: Virtual method `Clutter.Actor.event' conflicts with method of the same name
+      <virtual-method name="event">
+      ^^^^^^^^^^^
+- resolve the conflict by renaming the method to "emit_event":
+*/
+Actor
+	.event#method name="emit_event"
+
+/*
+Clutter-9.gir:616.7-616.39: warning: Virtual method `Clutter.Actor.get_paint_volume' conflicts with method of the same name
+      <virtual-method name="get_paint_volume">
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- resolve the conflict by renaming the method to "get_paint_volume_vfunc"
+*/
+	.get_paint_volume#method name="get_paint_volume_vfunc"
+
+/*
+Clutter-9.gir:2283.7-2283.63: warning: Signal `Clutter.Actor.event' conflicts with method of the same name
+      <method name="event" c:identifier="clutter_actor_event" version="0.6">
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+*/
+
+/*
+Clutter-9.gir:60158.7-60158.23: warning: Virtual method `Clutter.Text.activate' conflicts with method of the same name
+      <virtual-method name="activate">
+      ^^^^^^^^^^^^^^^^^
+- resolve the conflict by renaming the method to try_activate
+*/
+Text
+	.activate#method name="try_activate"
+
+/*
+Clutter-9.gir:61198.7-61200.20: warning: Signal `Clutter.Text.insert_text' conflicts with method of the same name
+- resolve the conflict by skipping the signal
+*/
+Text
+	.insert_text#signal skip
+
+/*
+Clutter-9.gir:62824.7-62824.23: warning: Virtual method `Clutter.TextBuffer.get_text' conflicts with method of the same name
+      <virtual-method name="get_text">
+      ^^^^^^^^^^^^^^^^^
+- resolve the conflict by renaming the method to get_text_with_length
+*/
+
+TextBuffer
+	.get_text#method name="get_text_with_length"
+
+
+/*
+Clutter-9.gir:62661.11-62672.10: error: `Clutter.Text.insert_text' already contains a definition for `position'
+Clutter-9.gir:62654.11-62660.10: note: previous definition of `position' was here
+*/
