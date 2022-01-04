@@ -19,6 +19,7 @@ using Clutter;
 using Meta;
 
 namespace Gala {
+/*
     class WindowShadowEffect : ShadowEffect {
         public unowned Meta.Window window { get; construct; }
 
@@ -41,6 +42,7 @@ namespace Gala {
             return bounding_box;
         }
     }
+*/
 
     /**
      * Border to show around the selected window when using keyboard navigation.
@@ -157,9 +159,12 @@ namespace Gala {
         public GestureTracker? gesture_tracker { get; construct; }
 
         [CCode (notify = false)]
-        public uint8 shadow_opacity {
+        public uint8 shadow_opacity = 250;
+/*
+		{
             get {
-                return shadow_effect != null ? shadow_effect.shadow_opacity : 255;
+
+				return shadow_effect != null ? shadow_effect.shadow_opacity : 255;
             }
             set {
                 if (shadow_effect != null) {
@@ -168,10 +173,11 @@ namespace Gala {
                 }
             }
         }
+*/
 
         DragDropAction? drag_action = null;
         Clone? clone = null;
-        ShadowEffect? shadow_effect = null;
+//        ShadowEffect? shadow_effect = null;
 
         Actor prev_parent = null;
         int prev_index = -1;
@@ -193,9 +199,11 @@ namespace Gala {
 
             window.unmanaged.connect (unmanaged);
             window.notify["on-all-workspaces"].connect (on_all_workspaces_changed);
+/*
             window.notify["fullscreen"].connect (check_shadow_requirements);
             window.notify["maximized-horizontally"].connect (check_shadow_requirements);
             window.notify["maximized-vertically"].connect (check_shadow_requirements);
+*/
 
             if (overview_mode) {
                 var click_action = new ClickAction ();
@@ -251,10 +259,11 @@ namespace Gala {
         ~WindowClone () {
             window.unmanaged.disconnect (unmanaged);
             window.notify["on-all-workspaces"].disconnect (on_all_workspaces_changed);
+/*
             window.notify["fullscreen"].disconnect (check_shadow_requirements);
             window.notify["maximized-horizontally"].disconnect (check_shadow_requirements);
             window.notify["maximized-vertically"].disconnect (check_shadow_requirements);
-
+*/
             if (shadow_update_timeout != 0)
                 Source.remove (shadow_update_timeout);
         }
@@ -294,7 +303,7 @@ namespace Gala {
 
             transition_to_original_state (false);
 
-            check_shadow_requirements ();
+//            check_shadow_requirements ();
 
             if (should_fade ())
                 opacity = 0;
@@ -312,6 +321,7 @@ namespace Gala {
             }
         }
 
+/*
         void check_shadow_requirements () {
             if (window.fullscreen || window.maximized_horizontally && window.maximized_vertically) {
                 if (shadow_effect == null) {
@@ -325,6 +335,7 @@ namespace Gala {
                 }
             }
         }
+*/
 
         /**
          * If we are in overview mode, we may display windows from workspaces other than
