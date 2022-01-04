@@ -139,7 +139,7 @@ namespace Gala {
         GLib.Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
         GLib.Intl.textdomain (Config.GETTEXT_PACKAGE);
 
-        Gtk.init (ref args);
+//        Gtk.init (ref args);
 
         var ctx = new OptionContext ("Gala Daemon");
         ctx.set_help_enabled (true);
