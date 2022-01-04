@@ -18,7 +18,7 @@ public class Gala.ShadowEffect : Clutter.Effect {
     // the sizes of the textures often repeat, especially for the background actor
     // so we keep a cache to avoid creating the same texture all over again.
     private static Gee.HashMap<string,Shadow> shadow_cache;
-    private static Gtk.StyleContext style_context;
+    private static Gtk.StyleContext style_context = null;
 
     class construct {
         shadow_cache = new Gee.HashMap<string,Shadow> ();
@@ -26,10 +26,12 @@ public class Gala.ShadowEffect : Clutter.Effect {
         var style_path = new Gtk.WidgetPath ();
         var id = style_path.append_type (typeof (Gtk.Window));
 
+        if (Utils.init_check_count != 0) {
         style_context = new Gtk.StyleContext ();
         style_context.add_provider (Gala.Utils.get_gala_css (), Gtk.STYLE_PROVIDER_PRIORITY_FALLBACK);
         style_context.add_class ("decoration");
         style_context.set_path (style_path);
+        }
     }
 
     public int shadow_size { get; construct; }
@@ -80,6 +82,8 @@ public class Gala.ShadowEffect : Clutter.Effect {
         cr.set_operator (Cairo.Operator.OVER);
         cr.save ();
         cr.scale (scale_factor, scale_factor);
+
+        if (style_context != null) {
         style_context.save ();
         if (css_class != null) {
             style_context.add_class (css_class);
@@ -89,6 +93,7 @@ public class Gala.ShadowEffect : Clutter.Effect {
         var size = shadow_size * scale_factor;
         style_context.render_background (cr, shadow_size, shadow_size, (width - size * 2) / scale_factor, (height - size * 2) / scale_factor);
         style_context.restore ();
+        }
         cr.restore ();
 
         cr.paint ();
