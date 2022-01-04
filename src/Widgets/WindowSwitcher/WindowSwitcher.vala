@@ -26,7 +26,7 @@ namespace Gala {
         private Clutter.Text caption;
 
         private Gtk.WidgetPath widget_path;
-        private Gtk.StyleContext style_context;
+        private Gtk.StyleContext style_context = null;
 
         private int modifier_mask;
 
@@ -109,6 +109,7 @@ namespace Gala {
         }
 
         private bool draw (Cairo.Context ctx, int width, int height) {
+
             if (style_context == null) { // gtk is not initialized yet
                 create_gtk_objects ();
             }
@@ -119,6 +120,7 @@ namespace Gala {
             ctx.clip ();
             ctx.reset_clip ();
 
+            if (style_context != null) {
             if (granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK) {
                 unowned var gtksettings = Gtk.Settings.get_default ();
                 unowned var css_provider = Gtk.CssProvider.get_named (gtksettings.gtk_theme_name, "dark");
@@ -129,6 +131,7 @@ namespace Gala {
             style_context.render_background (ctx, 0, 0, width, height);
             style_context.render_frame (ctx, 0, 0, width, height);
             ctx.restore ();
+            }
 
             return true;
         }
@@ -173,12 +176,14 @@ namespace Gala {
             widget_path.append_type (typeof (Gtk.Window));
             widget_path.iter_set_object_name (-1, "window");
 
+            if  (Utils.init_check_count != 0) {
             style_context = new Gtk.StyleContext ();
             style_context.set_scale ((int)Math.round (scaling_factor));
             style_context.set_path (widget_path);
             style_context.add_class ("background");
             style_context.add_class ("csd");
             style_context.add_class ("unified");
+            }
         }
 
         [CCode (instance_pos = -1)]

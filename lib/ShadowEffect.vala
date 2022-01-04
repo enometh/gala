@@ -85,6 +85,8 @@ public class Gala.ShadowEffect : Clutter.Effect {
         cr.set_operator (Cairo.Operator.OVER);
         cr.save ();
         cr.scale (scale_factor, scale_factor);
+
+        if (Utils.init_check_count != 0) {
         unowned var style_context = _style_context.once (create_style_context);
         style_context.save ();
         if (css_class != null) {
@@ -95,6 +97,8 @@ public class Gala.ShadowEffect : Clutter.Effect {
         var size = shadow_size * scale_factor;
         style_context.render_background (cr, shadow_size, shadow_size, (width - size * 2) / scale_factor, (height - size * 2) / scale_factor);
         style_context.restore ();
+        }
+
         cr.restore ();
 
         cr.paint ();

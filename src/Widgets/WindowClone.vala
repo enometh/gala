@@ -863,6 +863,7 @@ public class Gala.WindowClone : Clutter.Actor {
             var label_widget_path = new Gtk.WidgetPath ();
             label_widget_path.append_type (typeof (Gtk.Label));
 
+            if (Utils.init_check_count != 0) {
             var style_context = new Gtk.StyleContext ();
             style_context.add_class (Granite.STYLE_CLASS_CARD);
             style_context.add_class (Granite.STYLE_CLASS_ROUNDED);
@@ -872,6 +873,8 @@ public class Gala.WindowClone : Clutter.Actor {
                 Gtk.STYLE_PROPERTY_BORDER_RADIUS,
                 Gtk.StateFlags.NORMAL
             ).get_int () * 4;
+            }
+
         }
 
         public void invalidate () {
