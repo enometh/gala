@@ -232,6 +232,8 @@ public class Gala.WindowClone : Clutter.Actor {
     }
 
     private void check_shadow_requirements () {
+        if (Utils.init_check_count == 0) return;
+
         if (clone == null) {
             return;
         }

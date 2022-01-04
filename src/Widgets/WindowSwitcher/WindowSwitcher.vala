@@ -67,6 +67,8 @@ namespace Gala {
             // Carry out the initial draw
             create_components ();
 
+            if (Utils.init_check_count != 0) {
+
             var effect = new ShadowEffect (40) {
                 shadow_opacity = 200,
                 css_class = "window-switcher",
@@ -74,6 +76,7 @@ namespace Gala {
             };
 
             add_effect (effect);
+            }
 
             // Redraw the components if the colour scheme changes.
             granite_settings.notify["prefers-color-scheme"].connect (() => {
