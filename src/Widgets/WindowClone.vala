@@ -62,7 +62,7 @@ public class Gala.WindowClone : Clutter.Actor {
     public GestureTracker? gesture_tracker { get; construct; }
 
     [CCode (notify = false)]
-    public uint8 shadow_opacity {
+    public uint8 shadow_opacity = 250; /* {
         get {
             return shadow_effect != null ? shadow_effect.shadow_opacity : 255;
         }
@@ -73,10 +73,11 @@ public class Gala.WindowClone : Clutter.Actor {
             }
         }
     }
+    */
 
     DragDropAction? drag_action = null;
     private Clutter.Clone? clone = null;
-    ShadowEffect? shadow_effect = null;
+//    ShadowEffect? shadow_effect = null;
 
     private Clutter.Actor prev_parent = null;
     int prev_index = -1;
@@ -98,9 +99,11 @@ public class Gala.WindowClone : Clutter.Actor {
 
         window.unmanaged.connect (unmanaged);
         window.notify["on-all-workspaces"].connect (on_all_workspaces_changed);
+/*
         window.notify["fullscreen"].connect (check_shadow_requirements);
         window.notify["maximized-horizontally"].connect (check_shadow_requirements);
         window.notify["maximized-vertically"].connect (check_shadow_requirements);
+*/
 
         var click_action = new Clutter.ClickAction ();
         click_action.clicked.connect (() => {
@@ -156,10 +159,11 @@ public class Gala.WindowClone : Clutter.Actor {
     ~WindowClone () {
         window.unmanaged.disconnect (unmanaged);
         window.notify["on-all-workspaces"].disconnect (on_all_workspaces_changed);
+/*
         window.notify["fullscreen"].disconnect (check_shadow_requirements);
         window.notify["maximized-horizontally"].disconnect (check_shadow_requirements);
         window.notify["maximized-vertically"].disconnect (check_shadow_requirements);
-
+*/
         if (shadow_update_timeout != 0)
             Source.remove (shadow_update_timeout);
     }
@@ -199,7 +203,7 @@ public class Gala.WindowClone : Clutter.Actor {
 
         transition_to_original_state (false);
 
-        check_shadow_requirements ();
+//        check_shadow_requirements ();
 
         if (should_fade ())
             opacity = 0;
@@ -217,6 +221,7 @@ public class Gala.WindowClone : Clutter.Actor {
         }
     }
 
+/*
     void check_shadow_requirements () {
         if (clone == null) {
             return;
@@ -234,6 +239,7 @@ public class Gala.WindowClone : Clutter.Actor {
             }
         }
     }
+*/
 
     /**
      * If we are in overview mode, we may display windows from workspaces other than
@@ -821,6 +827,7 @@ public class Gala.WindowClone : Clutter.Actor {
         return true;
     }
 
+/*
     private class WindowShadowEffect : ShadowEffect {
         public unowned Meta.Window window { get; construct; }
 
@@ -843,6 +850,7 @@ public class Gala.WindowClone : Clutter.Actor {
             return bounding_box;
         }
     }
+*/
 
     /**
      * Border to show around the selected window when using keyboard navigation.
