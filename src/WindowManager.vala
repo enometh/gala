@@ -287,6 +287,7 @@ namespace Gala {
 
             zoom = new Zoom (this);
 
+            Utils.maybe_gtk_init("on window_manager show stage");
             accent_color_manager = new AccentColorManager ();
 
             // initialize plugins and add default components if no plugin overrides them
