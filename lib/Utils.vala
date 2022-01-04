@@ -453,5 +453,18 @@ namespace Gala {
 
             return gala_css;
         }
+
+        public static int init_check_count = 0;
+        public static void maybe_gtk_init(string where) {
+            if (init_check_count == 0) {
+                string[] bogus_args = {"Null"};
+                unowned string[] bogus_args2 = bogus_args;
+                stdout.printf("gtk_init_check started %s\n", where);
+                var ret = Gtk.init_check (ref bogus_args2);
+                stdout.printf("%s: gtk_init_check returned %b\n", where, ret);
+            }
+            init_check_count++;
+            stdout.printf("gtk_init_check: %d from %s\n", init_check_count, where);
+        }
     }
 }
