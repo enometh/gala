@@ -294,8 +294,8 @@ namespace Gala {
             laters.add (Meta.LaterType.BEFORE_REDRAW, () => {
                 string[] args = {};
                 unowned string[] _args = args;
-                Gtk.init (ref _args);
 
+                Utils.maybe_gtk_init("on window_manager.laters.add");
                 accent_color_manager = new AccentColorManager ();
 
                 // initialize plugins and add default components if no plugin overrides them

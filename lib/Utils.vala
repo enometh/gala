@@ -459,6 +459,12 @@ namespace Gala {
             if (init_check_count == 0) {
                 string[] bogus_args = {"Null"};
                 unowned string[] bogus_args2 = bogus_args;
+
+                if (Meta.Util.is_wayland_compositor ()) {
+                    stdout.printf("gtk_init_check: %s skipping Gtk.init entirely on wayland\n", where);
+                    return;
+                }
+
                 stdout.printf("gtk_init_check started %s\n", where);
                 var ret = Gtk.init_check (ref bogus_args2);
                 stdout.printf("%s: gtk_init_check returned %b\n", where, ret);
