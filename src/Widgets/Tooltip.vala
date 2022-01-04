@@ -22,7 +22,7 @@
 public class Gala.Tooltip : Clutter.Actor {
     private static Clutter.Color text_color;
     private static Gtk.Border padding;
-    private static Gtk.StyleContext style_context;
+//    private static Gtk.StyleContext style_context;
 
     /**
      * Canvas to draw the Tooltip background.
@@ -53,13 +53,15 @@ public class Gala.Tooltip : Clutter.Actor {
         tooltip_widget_path.iter_add_class (pos, Gtk.STYLE_CLASS_CSD);
         tooltip_widget_path.iter_add_class (pos, Gtk.STYLE_CLASS_BACKGROUND);
 
+/*
         style_context = new Gtk.StyleContext ();
         style_context.set_path (tooltip_widget_path);
 
         padding = style_context.get_padding (Gtk.StateFlags.NORMAL);
-
+*/
         tooltip_widget_path.append_type (typeof (Gtk.Label));
 
+/*
         var label_style_context = new Gtk.StyleContext ();
         label_style_context.set_path (tooltip_widget_path);
 
@@ -67,7 +69,9 @@ public class Gala.Tooltip : Clutter.Actor {
              Gtk.STYLE_PROPERTY_COLOR,
              Gtk.StateFlags.NORMAL
          );
+*/
 
+		Gdk.RGBA text_rgba =  { 255, 255, 255, 1.0 }; // FIXME initialize color
         text_color = Clutter.Color () {
             red = (uint8) text_rgba.red * uint8.MAX,
             green = (uint8) text_rgba.green * uint8.MAX,
@@ -142,8 +146,10 @@ public class Gala.Tooltip : Clutter.Actor {
     private static bool draw_background (Cairo.Context ctx, int width, int height) {
         ctx.save ();
 
+/*
         style_context.render_background (ctx, 0, 0, width, height);
         style_context.render_frame (ctx, 0, 0, width, height);
+*/
 
         ctx.restore ();
 
