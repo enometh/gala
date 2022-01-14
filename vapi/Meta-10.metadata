@@ -1,0 +1,7 @@
+/*
+Meta-10.gir:11343.7-11343.52: warning: Signal `Meta.Window.focus' conflicts with method of the same name
+      <method name="focus" c:identifier="meta_window_focus">
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+*/
+Window
+	.focus#signal name="focused"
