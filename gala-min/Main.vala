@@ -31,10 +31,8 @@ namespace GalaMin {
         Meta.exit (Meta.ExitCode.SUCCESS);
     }
 
-    public static int main (string[] args) {
-		var ctx = new Meta.Context ("Mutter(GalaMin)");
 
-        /* Intercept signals */
+	void init_signal_handlers(Meta.Context ctx) {
         Posix.sigset_t empty_mask;
         Posix.sigemptyset (out empty_mask);
         Posix.sigaction_t act = {};
@@ -54,6 +52,12 @@ namespace GalaMin {
             ctx.terminate ();
             return GLib.Source.REMOVE;
         });
+	}
+
+    public static int main (string[] args) {
+		var ctx = new Meta.Context ("Mutter(GalaMin)");
+
+		init_signal_handlers(ctx);
 
 		ctx.add_option_entries(GalaMin.OPTIONS, null);
 
