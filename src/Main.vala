@@ -1,3 +1,4 @@
+// -*- Mode: vala; indent-tabs-mode:nil; -*-
 //
 //  Copyright (C) 2012 Tom Beckmann, Rico Tzschichholz
 //
