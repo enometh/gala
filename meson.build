@@ -66,12 +66,22 @@ endif
 
 # ----------------------------------------------------------------------
 
+# libmutter_target is the custom target for vapi/libmutter-10.vapi
+#
+# libmutter_deps_file_symlink_target is the symlinked
+# vapi/libmutter-10.deps file.
+#
+# manually call
+#  ninja -C build vapi/libmutter-10.vapi
+#  ninja -C build vapi/libmutter-10.deps
 
 add_project_arguments([
-        '--vapidir=' +  meson.current_source_dir() / 'build/vapi'
+        '--vapidir=' + meson.current_build_dir() + '/vapi'
     ],
-    language: 'vala',
-)
+    language: 'vala')
+
+# ----------------------------------------------------------------------
+
 
 # DEPS: [ 'Atk' 'Graphene' 'GLib' 'Pango' 'Cairo' 'GDesktop' 'Gtk'
 # 'Posix' 'X' ]

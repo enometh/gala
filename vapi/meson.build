@@ -147,3 +147,16 @@ if mutter42_dep.found()
 		output: 'libmutter-10.vapi'
 	)
 endif
+
+# ----------------------------------------------------------------------
+
+libmutter_deps_file_symlink_target = \
+  custom_target('libmutter-10-deps-file-symlink-target',
+		command: [
+		  'ln',  '-sv',
+		  meson.current_source_dir() + '/libmutter.deps',
+		  meson.current_build_dir() + '/libmutter-10.deps'
+		],
+		output: [
+		  'libmutter-10.deps'
+		])
