@@ -22,8 +22,13 @@
 
 
 namespace GalaMin {
+    static char *plugin_name = "libdefault";
+
     const OptionEntry[] OPTIONS = {
-        { "version", 0, OptionFlags.NO_ARG, OptionArg.CALLBACK, (void*) print_version, "Print version", null },
+        { "version", 0, OptionFlags.NO_ARG, OptionArg.CALLBACK,
+          (void*) print_version, "Print version", null },
+        { "mutter-plugin", 0, OptionFlags.NONE, OptionArg.STRING,
+          ref plugin_name, "Mutter plugin to use", "PLUGIN" },
         { null }
     };
 
@@ -60,7 +65,7 @@ namespace GalaMin {
 
 		init_signal_handlers(ctx);
 
-		ctx.add_option_entries(GalaMin.OPTIONS, null);
+		ctx.add_option_entries(OPTIONS, null);
 
         try {
             string[] args1 = args;
@@ -70,7 +75,7 @@ namespace GalaMin {
             return Posix.EXIT_FAILURE;
         }
 
-		ctx.set_plugin_name ("libdefault"); // TODO plugin
+		ctx.set_plugin_name ((string) plugin_name);
 
         try {
             ctx.setup ();
