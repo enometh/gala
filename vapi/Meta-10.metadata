@@ -5,3 +5,19 @@ Meta-10.gir:11343.7-11343.52: warning: Signal `Meta.Window.focus' conflicts with
 */
 Window
 	.focus#signal name="focused"
+
+/*
+gala-min/gala-min.p/Main.c:42:10: fatal error: Meta-10.h: No such file or directory
+*/
+* cheader_filename="meta/main.h"
+
+/*
+ gala-min/gala-min.p/Main.c:65:9: error: unknown type name 'MetaContext'
+*/
+Context	 cheader_filename="meta/meta-context.h"
+
+
+/*
+gala-min/gala-min.p/Main.c:65:9: error: unknown type name 'MetaContext'
+*/
+create_context parent="Meta.Context" cheader_filename="meta/meta-context.h"  name="new" symbol_type="constructor"
