@@ -63,3 +63,25 @@ vapigen = find_program('vapigen', required: false)
 if vapigen.found()
     subdir('vapi')
 endif
+
+# ----------------------------------------------------------------------
+
+
+add_project_arguments([
+        '--vapidir=' +  meson.current_source_dir() / 'build/vapi'
+    ],
+    language: 'vala',
+)
+
+# DEPS: [ 'Atk' 'Graphene' 'GLib' 'Pango' 'Cairo' 'GDesktop' 'Gtk'
+# 'Posix' 'X' ]
+
+posix_dep = vala.find_library('posix')
+base_dep_names = [ 'gtk+-3.0',  'gnome-desktop-3.0', 'graphene-1.0' ]
+base_deps = []
+
+foreach i :base_dep_names
+  base_deps += dependency(i)
+endforeach
+
+subdir('gala-min')

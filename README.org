@@ -16,3 +16,13 @@ meson build --reconfigure \
 rm -fv build/vapi/libmutter-10.vapi
 ninja -C build vapi/libmutter-10.vapi
 #+end_src
+
+** gala-min
+- add build arguments to meson: --vapidir build/vapi
+- add file vapi/libmutter.deps and symlink it into build/vapi
+- figure out how to depend on the built dependency
+
+** running it
+tabbed -s -n Xephyr > /dev/shm/xephyr.xid &
+Xephyr :1 -parent $(cat /dev/shm/xephyr.xid &
+DISPLAY=:1 build/gala-min/gala-min
