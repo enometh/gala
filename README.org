@@ -20,9 +20,24 @@ ninja -C build vapi/libmutter-10.vapi
 ** gala-min
 - add build arguments to meson: --vapidir build/vapi
 - add file vapi/libmutter.deps and symlink it into build/vapi
+#+begin_src
+ln -sv  ../../vapi/libmutter.deps build/vapi/libmutter-10.deps
+#+end_src
 - figure out how to depend on the built dependency
+*** regenerate libmutter-10.vapi in build directory
+#+begin_src
+rm -fv build/vapi/libmutter-10.vapi
+ninja -C build vapi/libmutter-10.vapi
+#+end_src
 
-** running it
+*** compile gala-min executable
+#+begin_src
+ninja -C build -t targets
+CCACHE_DIR=/dev/shm/ccache ninja -C build
+#+end_src
+*** run it
+#+begin_src
 tabbed -s -n Xephyr > /dev/shm/xephyr.xid &
 Xephyr :1 -parent $(cat /dev/shm/xephyr.xid &
-DISPLAY=:1 build/gala-min/gala-min
+DISPLAY=:1 build/gala-min/gala-min &
+#+end_src \ No newline at end of file
