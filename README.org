@@ -7,3 +7,12 @@ meson build
 ninja -C build -t targets
 ninja -C build vapi/libmutter-9.vapi
 #+end_src
+
+*** mutter-10 with a local directory
+#+begin_src shell
+PREFIX=${HOME}/root/usr; \
+meson build --reconfigure \
+ -Dpkg_config_path=${PREFIX}/lib64/pkgconfig:${PREFIX}/share/pkgconfig/:/usr/lib64/pkgconfig
+rm -fv build/vapi/libmutter-10.vapi
+ninja -C build vapi/libmutter-10.vapi
+#+end_src
