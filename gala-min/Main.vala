@@ -62,8 +62,8 @@ namespace GalaMin {
 		ctx.add_option_entries(GalaMin.OPTIONS, null);
 
         try {
-			string[] args1 = args;
-            ctx.configure (ref args1)
+            string[] args1 = args;
+            ctx.configure (ref args1);
         } catch (Error e) {
             stderr.printf ("Failed to configure: %s\n", e.message);
             return Posix.EXIT_FAILURE;
@@ -72,7 +72,7 @@ namespace GalaMin {
 		ctx.set_plugin_name ("libdefault"); // TODO plugin
 
         try {
-            ctx.setup ()
+            ctx.setup ();
         } catch (Error e) {
             stderr.printf ("Failed to setup: %s\n", e.message);
             return Posix.EXIT_FAILURE;
