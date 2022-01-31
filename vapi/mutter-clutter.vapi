@@ -6312,6 +6312,16 @@ namespace Clutter {
 		public virtual signal void gesture_end (Clutter.Actor actor);
 		public virtual signal bool gesture_progress (Clutter.Actor actor);
 	}
+#if HAS_MUTTER42
+	[CCode (cheader_filename = "clutter/clutter.h", ref_function = "clutter_grab_ref", type_id = "clutter_grab_get_type ()", unref_function = "clutter_grab_unref")]
+	[Compact]
+	public class Grab {
+		public void dismiss ();
+		public Clutter.GrabState get_seat_state ();
+		public Clutter.Grab @ref ();
+		public void unref ();
+	}
+#endif
 	[CCode (cheader_filename = "clutter/clutter.h", type_id = "clutter_grid_layout_get_type ()")]
 	[Version (since = "1.12")]
 	public class GridLayout : Clutter.LayoutManager {
@@ -6471,8 +6481,7 @@ namespace Clutter {
 #endif
 		[Version (since = "1.22")]
 		public unowned string get_vendor_id ();
-		[Version (since = "1.10")]
-		public void grab (Clutter.Actor actor);
+
 		public virtual bool is_grouped (Clutter.InputDevice other_device);
 		public virtual bool is_mode_switch_button (uint group, uint button);
 #if !HAS_MUTTER40
@@ -6492,8 +6501,7 @@ namespace Clutter {
 		public void set_key (uint index_, uint keyval, Clutter.ModifierType modifiers);
 		public void set_mapping_mode (Clutter.InputDeviceMapping mapping);
 #endif
-		[Version (since = "1.10")]
-		public void ungrab ();
+
 #if !HAS_MUTTER40
 		[Version (since = "1.2")]
 		public void update_from_event (Clutter.Event event, bool update_stage);
@@ -7185,6 +7193,11 @@ namespace Clutter {
 		public virtual Clutter.VirtualDeviceType get_supported_virtual_device_types ();
 #endif
 		public bool get_touch_mode ();
+#if HAS_MUTTER42
+		[NoWrapper]
+		public virtual Clutter.GrabState grab (uint32 time);
+#endif
+
 #if HAS_MUTTER40
 		public virtual bool handle_event_post (Clutter.Event event);
 #elif HAS_MUTTER338
@@ -7204,6 +7217,10 @@ namespace Clutter {
 #endif
 		public void set_pointer_a11y_dwell_click_type (Clutter.PointerA11yDwellClickType click_type);
 		public void set_pointer_a11y_settings (Clutter.PointerA11ySettings settings);
+#if HAS_MUTTER42
+		[NoWrapper]
+		public virtual void ungrab (uint32 time);
+#endif
 		public void uninhibit_unfocus ();
 		public virtual void warp_pointer (int x, int y);
 #if !HAS_MUTTER42
@@ -7362,6 +7379,9 @@ namespace Clutter {
 		[Version (deprecated = true, deprecated_since = "1.10")]
 		public static unowned Clutter.Stage get_default ();
 #endif
+#if HAS_MUTTER42
+		public unowned Clutter.Actor get_grab_actor ();
+#endif
 		public int64 get_frame_counter ();
 		[Version (since = "0.6")]
 		public unowned Clutter.Actor get_key_focus ();
@@ -7378,6 +7398,11 @@ namespace Clutter {
 #endif
 		[Version (since = "1.0")]
 		public bool get_throttle_motion_events ();
+
+#if HAS_MUTTER42
+		public unowned Clutter.Grab grab (Clutter.Actor actor);
+#endif
+
 		[Version (since = "0.4")]
 		public unowned string get_title ();
 		[Version (since = "1.2")]
@@ -8650,7 +8675,10 @@ namespace Clutter {
 #if HAS_MUTTER40
 		FLAG_RELATIVE_MOTION,
 #endif
-		FLAG_REPEATED
+		FLAG_REPEATED,
+#if HAS_MUTTER42
+        FLAG_GRAB_NOTIFY
+#endif
 	}
 #if HAS_MUTTER42
 	[CCode (cheader_filename = "clutter/clutter.h", cprefix = "CLUTTER_PHASE_", type_id = "clutter_event_phase_get_type ()")]
@@ -8747,6 +8775,16 @@ namespace Clutter {
 		AFTER,
 		BEFORE
 	}
+#if HAS_MUTTER42
+	[CCode (cheader_filename = "clutter/clutter.h", cprefix = "CLUTTER_GRAB_STATE_", type_id = "clutter_grab_state_get_type ()")]
+	[Flags]
+	public enum GrabState {
+		NONE,
+		POINTER,
+		KEYBOARD,
+		ALL
+	}
+#endif
 	[CCode (cheader_filename = "clutter/clutter.h", cprefix = "CLUTTER_GRAVITY_", type_id = "clutter_gravity_get_type ()")]
 	[Version (deprecated = true, deprecated_since = "1.22", since = "0.2")]
 	public enum Gravity {
