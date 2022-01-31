@@ -219,7 +219,7 @@ public class Gala.Plugins.PIP.PopupWindow : Clutter.Actor {
         begin_resize_width = width;
         begin_resize_height = height;
 
-        resize_button.get_stage ().set_motion_events_enabled (false);
+//        resize_button.get_stage ().set_motion_events_enabled (false);
         resize_button.get_stage ().captured_event.connect (on_resize_event);
 
         return true;
@@ -274,7 +274,7 @@ public class Gala.Plugins.PIP.PopupWindow : Clutter.Actor {
         }
 
         resize_button.get_stage ().captured_event.disconnect (on_resize_event);
-        resize_button.get_stage ().set_motion_events_enabled (true);
+//        resize_button.get_stage ().set_motion_events_enabled (true);
 
         resizing = false;
 
