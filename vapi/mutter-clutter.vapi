@@ -6516,6 +6516,8 @@ namespace Clutter {
 #endif
 		[Version (since = "1.22")]
 		public unowned string get_vendor_id ();
+
+/* madhu 220706 - grab is gone in 42 the following 2 lines should be there? */
 		[Version (since = "1.10")]
 		public void grab (Clutter.Actor actor);
 		public virtual bool is_grouped (Clutter.InputDevice other_device);
@@ -7458,11 +7460,19 @@ namespace Clutter {
 #endif
 		[Version (since = "1.0")]
 		public bool get_throttle_motion_events ();
+
+#if HAS_MUTTER42
+		public unowned Clutter.Grab grab (Clutter.Actor actor);
+#endif
+
 		[Version (since = "0.4")]
 		public unowned string get_title ();
+
+/* madhu 220706 - grab inn 42 sig
 #if HAS_MUTTER42
 		public Clutter.Grab grab (Clutter.Actor actor);
 #endif
+*/
 #if !HAS_MUTTER42
 		[Version (since = "1.2")]
 		public bool get_use_alpha ();
