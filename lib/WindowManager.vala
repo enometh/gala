@@ -77,6 +77,12 @@ namespace Gala {
         public void allow_all_keybindings () {
             keybinding_filter = null;
         }
+
+        /**
+         * ClutterGrab to implement modal behaviour
+         **/
+        public Clutter.Grab grab;
+
     }
 
     public interface WindowManager : Meta.Plugin {

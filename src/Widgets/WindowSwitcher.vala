@@ -335,6 +335,8 @@ namespace Gala {
         }
 
         void push_modal () {
+            grab_key_focus ();
+
             modal_proxy = wm.push_modal ();
             modal_proxy.keybinding_filter = (binding) => {
                 // if it's not built-in, we can block it right away
@@ -348,7 +350,6 @@ namespace Gala {
                     || name == "switch-windows" || name == "switch-windows-backward");
             };
 
-            grab_key_focus ();
         }
 
         void close_switcher (uint32 time, bool cancel = false) {

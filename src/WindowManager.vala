@@ -677,8 +677,7 @@ namespace Gala {
             var time = display.get_current_time ();
 
             update_input_area ();
-            begin_modal (0, time);
-
+            proxy.grab = stage.grab ((Clutter.Actor) stage);
             display.disable_unredirect ();
 
             return proxy;
@@ -699,7 +698,7 @@ namespace Gala {
             update_input_area ();
 
             unowned Meta.Display display = get_display ();
-            end_modal (display.get_current_time ());
+            proxy.grab.dismiss ();
 
             display.enable_unredirect ();
         }
