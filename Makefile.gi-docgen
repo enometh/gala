@@ -1,0 +1,25 @@
+# -*- Makefile -*-
+GIRDIR ?= $(HOME)/root/usr/lib64/mutter-10
+OUTDIR ?= html
+
+gi_docgen_cmd ?= /7/gtk/gi-docgen/gi-docgen.py
+
+gi_docgen_args = --config=gi-docgen.d/generic.toml \
+	--add-include-path $(GIRDIR) \
+	--output-dir=$(OUTDIR)
+
+pkgs = Cogl-10 Meta-10 Clutter-10 Cally-10 CoglPango-10
+
+pkgname_to_target = $(foreach x,$(1),$(OUTDIR)/$(x)/$(x).devhelp2)
+pkgname_to_source = $(GIRDIR)/$(1).gir
+
+tgts = $(call pkgname_to_target,$(pkgs))
+
+define docgen_rule =
+$(call pkgname_to_target,$(1)): $(call pkgname_to_source,$(1))
+	$$(gi_docgen_cmd) generate $$(gi_docgen_args) $$<
+endef
+
+all: $(tgts)
+
+$(foreach pkg,$(pkgs),$(eval $(call docgen_rule,$(pkg))))

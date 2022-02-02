@@ -41,3 +41,10 @@ tabbed -s -n Xephyr > /dev/shm/xephyr.xid &
 Xephyr :1 -parent $(cat /dev/shm/xephyr.xid &
 DISPLAY=:1 build/gala-min/gala-min &
 #+end_src \ No newline at end of file
+
+* gi-docgen
+generate docs for Mutter from gir in directory html
+#+begin_src
+GIRDIR=~/root/usr/lib64/mutter-10 OUTDIR=html \
+ make -f Makefile.gi-docgen &
+#+end_src
