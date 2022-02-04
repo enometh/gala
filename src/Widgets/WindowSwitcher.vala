@@ -182,6 +182,9 @@ namespace Gala {
             add_child (caption);
         }
 
+        enum SwitcherMode { WINDOWS_P, APPLICATIONS_P, GROUP_P }
+        SwitcherMode switcher_mode = WINDOWS_P;
+
         [CCode (instance_pos = -1)]
         public void handle_switch_windows (
             Meta.Display display, Meta.Window? window,
@@ -201,6 +204,20 @@ namespace Gala {
                 }
             }
 
+            var binding_name = binding.get_name ();
+            var backward = binding_name.has_suffix ("-backward");
+
+            // FIXME for unknown reasons, switch-applications-backward won't be emitted, so we
+            // test manually if shift is held down
+            // TODO: CHECK IF COMMENT IS STILL TRUE
+            if (binding_name == "switch-applications") {
+                switcher_mode = APPLICATIONS_P;
+                backward = ((get_current_modifiers () & Gdk.ModifierType.SHIFT_MASK) != 0);
+            } else if (binding_name == "switch-group") {
+                switcher_mode = GROUP_P;
+                backward = ((get_current_modifiers () & Gdk.ModifierType.SHIFT_MASK) != 0);
+            }
+
             if (!opened) {
                 var windows_exist = collect_windows (display, workspace);
                 if (!windows_exist) {
@@ -210,9 +227,6 @@ namespace Gala {
                 open_switcher ();
                 update_indicator_position (true);
             }
-
-            var binding_name = binding.get_name ();
-            var backward = binding_name.has_suffix ("-backward");
 
             next_window (display, workspace, backward);
         }
@@ -229,7 +243,29 @@ namespace Gala {
             container.width = -1;
             container.destroy_all_children ();
 
+            string window_class_filter = null;
+            Gee.HashSet<string> icons_added = null;
+
+            if (switcher_mode == GROUP_P) {
+                window_class_filter = current_window.get_wm_class ();
+            } else if (switcher_mode == APPLICATIONS_P) {
+                icons_added = new Gee.HashSet<string> ();
+            }
+
             foreach (var window in windows) {
+                string wm_class = null;
+                if (switcher_mode != WINDOWS_P)
+                    wm_class = window.get_wm_class ();
+                if (switcher_mode == GROUP_P) {
+                    if (wm_class != window_class_filter)
+                        continue;
+                } else if (switcher_mode == APPLICATIONS_P) {
+                    if (icons_added.contains (wm_class))
+                        continue;
+                    else
+                        icons_added.add (wm_class);
+                }
+
                 var icon = new WindowIcon (window, ICON_SIZE * scaling_factor);
                 if (window == current_window) {
                     cur_icon = icon;
@@ -348,7 +384,8 @@ namespace Gala {
                 var name = binding.get_name ();
 
                 return !(name == "switch-applications" || name == "switch-applications-backward"
-                    || name == "switch-windows" || name == "switch-windows-backward");
+                    || name == "switch-windows" || name == "switch-windows-backward"
+                    || name == "switch-group" || name == "switch-group-backward");
             };
 
         }
@@ -373,6 +410,7 @@ namespace Gala {
             }
 
             toggle_display (false);
+            switcher_mode = WINDOWS_P;
         }
 
         void next_window (Meta.Display display, Meta.Workspace? workspace, bool backward) {
