@@ -101,6 +101,7 @@ namespace Gala {
             });
 
             canvas.draw.connect (draw);
+            reactive = true;
         }
 
         private bool draw (Cairo.Context ctx, int width, int height) {
