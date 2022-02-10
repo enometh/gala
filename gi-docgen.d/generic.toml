@@ -4,8 +4,8 @@
 
 [library]
 devhelp = true
-#search_index = true
+search_index = true
 
 [theme]
 name = "basic"
-#show_index_summary = true
+show_index_summary = true
