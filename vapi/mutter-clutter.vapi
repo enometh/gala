@@ -5567,7 +5567,9 @@ namespace Clutter {
 	[Version (since = "0.2")]
 	public class AnyEvent : Clutter.Event {
 		public Clutter.EventFlags flags;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -5797,7 +5799,9 @@ namespace Clutter {
 #endif
 		public Clutter.EventFlags flags;
 		public Clutter.ModifierType modifier_state;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -5911,7 +5915,9 @@ namespace Clutter {
 		public Clutter.EventFlags flags;
 		public weak Clutter.Actor related;
 		public weak Clutter.EventSequence sequence;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -5950,7 +5956,9 @@ namespace Clutter {
 	public class DeviceEvent : Clutter.Event {
 		public weak Clutter.InputDevice device;
 		public Clutter.EventFlags flags;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -6359,7 +6367,9 @@ namespace Clutter {
 		public Clutter.PreeditResetMode mode;
 #endif
 		public int32 offset;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public weak string text;
 		public uint32 time;
@@ -6683,7 +6693,9 @@ namespace Clutter {
 		public uint16 hardware_keycode;
 		public uint keyval;
 		public Clutter.ModifierType modifier_state;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -6791,7 +6803,9 @@ namespace Clutter {
 #endif
 		public Clutter.EventFlags flags;
 		public Clutter.ModifierType modifier_state;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 #if HAS_MUTTER40
@@ -6831,7 +6845,9 @@ namespace Clutter {
 		public Clutter.EventFlags flags;
 		public uint32 group;
 		public uint32 mode;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -6846,7 +6862,9 @@ namespace Clutter {
 		public uint32 mode;
 		public uint32 ring_number;
 		public Clutter.InputDevicePadSource ring_source;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -6858,7 +6876,9 @@ namespace Clutter {
 		public Clutter.EventFlags flags;
 		public uint32 group;
 		public uint32 mode;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 strip_number;
 		public Clutter.InputDevicePadSource strip_source;
@@ -7044,7 +7064,9 @@ namespace Clutter {
 	public class ProximityEvent : Clutter.Event {
 		public weak Clutter.InputDevice device;
 		public Clutter.EventFlags flags;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -7157,7 +7179,9 @@ namespace Clutter {
 		public Clutter.EventFlags flags;
 		public Clutter.ModifierType modifier_state;
 		public Clutter.ScrollSource scroll_source;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -7373,6 +7397,10 @@ namespace Clutter {
 #if HAS_MUTTER40
 		public unowned Clutter.Actor get_device_actor (Clutter.InputDevice device, Clutter.EventSequence? sequence);
 #endif
+#if HAS_MUTTER42
+		public unowned Clutter.Actor get_event_actor (Clutter.Event event);
+#endif
+
 #if !HAS_MUTTER338
 		[Version (deprecated = true, deprecated_since = "1.10")]
 		public Clutter.Color get_color ();
@@ -7530,7 +7558,9 @@ namespace Clutter {
 		public Clutter.StageState changed_mask;
 		public Clutter.EventFlags flags;
 		public Clutter.StageState new_state;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -7973,7 +8003,9 @@ namespace Clutter {
 		public Clutter.EventFlags flags;
 		public Clutter.ModifierType modifier_state;
 		public weak Clutter.EventSequence sequence;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -7987,7 +8019,9 @@ namespace Clutter {
 		public Clutter.EventFlags flags;
 		public uint32 n_fingers;
 		public Clutter.TouchpadGesturePhase phase;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -8012,7 +8046,9 @@ namespace Clutter {
 		public uint n_fingers;
 		public Clutter.TouchpadGesturePhase phase;
 		public float scale;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
@@ -8034,7 +8070,9 @@ namespace Clutter {
 		public Clutter.EventFlags flags;
 		public uint n_fingers;
 		public Clutter.TouchpadGesturePhase phase;
+#if ! HAS_MUTTER42
 		public weak Clutter.Actor source;
+#endif
 		public weak Clutter.Stage stage;
 		public uint32 time;
 		public Clutter.EventType type;
