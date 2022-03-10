@@ -354,6 +354,10 @@ namespace Meta {
 		public unowned Meta.Display get_display ();
 		public bool is_replacing ();
 		public void notify_ready ();
+#if HAS_MUTTER42
+		public bool raise_rlimit_nofile () throws GLib.Error;
+		public bool restore_rlimit_nofile () throws GLib.Error;
+#endif
 		public bool run_main_loop () throws GLib.Error;
 		public void set_gnome_wm_keybindings (string wm_keybindings);
 		public void set_plugin_gtype (GLib.Type plugin_gtype);
@@ -511,6 +515,9 @@ namespace Meta {
 		public signal void window_entered_monitor (int object, Meta.Window p0);
 		public signal void window_left_monitor (int object, Meta.Window p0);
 		public signal void window_marked_urgent (Meta.Window object);
+#if HAS_MUTTER42
+		public signal void window_visibility_updated (void* object, void* p0, void* p1);
+#endif
 		public signal void workareas_changed ();
 		public signal void x11_display_closing ();
 		public signal void x11_display_opened ();
@@ -559,6 +566,15 @@ namespace Meta {
 		public unowned string get_name ();
 		public bool is_builtin ();
 		public bool is_reversed ();
+#if HAS_MUTTER42
+	[CCode (cheader_filename = "meta/main.h", has_type_id = false)]
+	[Compact]
+	public class Laters {
+		public uint add (Meta.LaterType when, owned GLib.SourceFunc func);
+		public void remove (uint later_id);
+	}
+#endif
+
 		[CCode (cheader_filename = "meta/keybindings.h", cname = "meta_keybindings_set_custom_handler")]
 		public static bool set_custom_handler (string name, owned Meta.KeyHandlerFunc? handler);
 	}
@@ -1180,7 +1196,11 @@ namespace Meta {
 		public int height;
 		public int area ();
 		public bool contains_rect (Meta.Rectangle inner_rect);
+#if	HAS_MUTTER42
+		public Meta.Rectangle copy ();
+#else
 		public Meta.Rectangle? copy ();
+#endif
 		public bool could_fit_rect (Meta.Rectangle inner_rect);
 		public bool equal (Meta.Rectangle src2);
 		public void free ();
