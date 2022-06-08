@@ -146,11 +146,10 @@ if mutter42_dep.found()
 		depends: [ cogl_target, cogl_pango_target, clutter_target ],
 		output: 'libmutter-10.vapi'
 	)
-endif
 
 # ----------------------------------------------------------------------
 
-libmutter_deps_file_symlink_target = \
+libmutter10_deps_file_symlink_target = \
   custom_target('libmutter-10-deps-file-symlink-target',
 		command: [
 		  'ln',  '-sv',
@@ -160,3 +159,90 @@ libmutter_deps_file_symlink_target = \
 		output: [
 		  'libmutter-10.deps'
 		])
+
+endif
+
+# ----------------------------------------------------------------------
+
+if mutter43_dep.found()
+	cogl_target = custom_target('mutter-cogl-11',
+		command: [
+			vapigen,
+			mutter_typelib_dir / 'Cogl-11.gir',
+			'--library=mutter-cogl-11',
+			'--pkg=gobject-2.0',
+			'--pkg=cairo',
+			'--pkg=graphene-gobject-1.0',
+			vapigen_args,
+#			files('Cogl-9-custom.vala')
+		],
+		output: 'mutter-cogl-11.vapi'
+	)
+
+	cogl_pango_target = custom_target('mutter-cogl-pango-11',
+		command: [
+			vapigen,
+			mutter_typelib_dir / 'CoglPango-11.gir',
+			'--library=mutter-cogl-pango-11',
+			'--pkg=mutter-cogl-11',
+			'--pkg=pangocairo',
+			vapigen_args
+		],
+		depends: cogl_target,
+		output: 'mutter-cogl-pango-11.vapi'
+	)
+
+	clutter_target = custom_target('mutter-clutter-11',
+		command: [
+			vapigen,
+			mutter_typelib_dir / 'Clutter-11.gir',
+			'--library=mutter-clutter-11',
+			'--pkg=graphene-gobject-1.0',
+			'--pkg=mutter-cogl-11',
+			'--pkg=mutter-cogl-pango-11',
+			'--pkg=atk',
+			'--pkg=gio-2.0',
+			'--pkg=json-glib-1.0',
+			'--pkg=pangocairo',
+			vapigen_args,
+#			files('Clutter-10-custom.vala')
+		],
+		depends: [ cogl_target, cogl_pango_target ],
+		output: 'mutter-clutter-11.vapi'
+	)
+
+	libmutter_target = custom_target('libmutter-11',
+		command: [
+			vapigen,
+			mutter_typelib_dir / 'Meta-11.gir',
+			'--library=libmutter-11',
+			'--pkg=graphene-gobject-1.0',
+			'--pkg=mutter-cogl-11',
+			'--pkg=mutter-cogl-pango-11',
+			'--pkg=mutter-clutter-11',
+			'--pkg=atk',
+			'--pkg=gio-2.0',
+			'--pkg=json-glib-1.0',
+			'--pkg=pangocairo',
+			'--pkg=gtk+-3.0',
+			'--pkg=x11',
+			'--pkg=xfixes-4.0',
+			vapigen_args
+		],
+		depends: [ cogl_target, cogl_pango_target, clutter_target ],
+		output: 'libmutter-11.vapi'
+	)
+
+# ----------------------------------------------------------------------
+
+libmutter11_deps_file_symlink_target = \
+  custom_target('libmutter-11-deps-file-symlink-target',
+		command: [
+		  'ln',  '-sv',
+		  meson.current_source_dir() + '/libmutter.deps',
+		  meson.current_build_dir() + '/libmutter-11.deps'
+		],
+		output: [
+		  'libmutter-11.deps'
+		])
+endif
