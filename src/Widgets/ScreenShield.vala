@@ -428,3 +428,13 @@ namespace Gala {
         }
     }
 }
+
+/*
+ * Local Variables:
+ * flycheck-vala-check-executable: "/usr/bin/valac-0.54"
+ * flycheck-vala-packages: ( "posix" "libmutter-11" "gala")
+ * flycheck-vala-vapidirs: ( "/7/gtk/gala/vapi" "/home/madhu/root/usr/share/vala/vapi/" )
+ * End:
+ */
+
+// (flycheck-substitute-argument (get 'vala-check 'flycheck-command) 'vala-check)
