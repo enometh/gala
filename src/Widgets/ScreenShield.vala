@@ -291,6 +291,9 @@ namespace Gala {
                 if (login_user_manager == null) {
                     return null;
                 }
+                if (login_user_manager.display == null) {
+                    return null;
+                }
 
                 session_id = login_user_manager.display.session;
             }
