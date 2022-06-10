@@ -188,6 +188,8 @@ if get_option('systemd')
     vala_flags += ['--define', 'WITH_SYSTEMD']
 endif
 
+vala_flags += ['-g', '--Xcc=-O0']
+
 add_project_arguments(vala_flags, language: 'vala')
 add_project_link_arguments(['-Wl,-rpath,@0@'.format(mutter_typelib_dir)], language: 'c')
 
