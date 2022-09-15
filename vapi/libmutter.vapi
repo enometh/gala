@@ -589,6 +589,15 @@ namespace Meta {
 		public unowned string get_name ();
 		public bool is_builtin ();
 		public bool is_reversed ();
+#if HAS_MUTTER42
+	[CCode (cheader_filename = "meta/main.h", has_type_id = false)]
+	[Compact]
+	public class Laters {
+		public uint add (Meta.LaterType when, owned GLib.SourceFunc func);
+		public void remove (uint later_id);
+	}
+#endif
+
 		[CCode (cheader_filename = "meta/keybindings.h", cname = "meta_keybindings_set_custom_handler")]
 		public static bool set_custom_handler (string name, owned Meta.KeyHandlerFunc? handler);
 	}
@@ -1226,7 +1235,11 @@ namespace Meta {
 		public int height;
 		public int area ();
 		public bool contains_rect (Meta.Rectangle inner_rect);
+#if	HAS_MUTTER42
+		public Meta.Rectangle copy ();
+#else
 		public Meta.Rectangle? copy ();
+#endif
 		public bool could_fit_rect (Meta.Rectangle inner_rect);
 		public bool equal (Meta.Rectangle src2);
 		public void free ();
