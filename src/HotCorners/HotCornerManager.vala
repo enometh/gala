@@ -22,12 +22,9 @@ public class Gala.HotCornerManager : Object {
     public WindowManager wm { get; construct; }
     public GLib.Settings behavior_settings { get; construct; }
 
-    private GLib.GenericArray<HotCorner> hot_corners;
-
     public HotCornerManager (WindowManager wm, GLib.Settings behavior_settings) {
         Object (wm: wm, behavior_settings: behavior_settings);
 
-        hot_corners = new GLib.GenericArray<HotCorner> ();
         behavior_settings.changed.connect (configure);
         Meta.MonitorManager.@get ().monitors_changed.connect (configure);
     }
@@ -41,41 +38,53 @@ public class Gala.HotCornerManager : Object {
 
         var geometry = display.get_monitor_geometry (display.get_primary_monitor ());
 
-        remove_all_hot_corners ();
-        add_hotcorner (geometry.x, geometry.y, HotCorner.POSITION_TOP_LEFT);
-        add_hotcorner (geometry.x + geometry.width, geometry.y, HotCorner.POSITION_TOP_RIGHT);
-        add_hotcorner (geometry.x, geometry.y + geometry.height, HotCorner.POSITION_BOTTOM_LEFT);
-        add_hotcorner (geometry.x + geometry.width, geometry.y + geometry.height, HotCorner.POSITION_BOTTOM_RIGHT);
+        add_hotcorner (geometry.x, geometry.y, "hotcorner-topleft");
+        add_hotcorner (geometry.x + geometry.width - 1, geometry.y, "hotcorner-topright");
+        add_hotcorner (geometry.x, geometry.y + geometry.height - 1, "hotcorner-bottomleft");
+        add_hotcorner (geometry.x + geometry.width - 1, geometry.y + geometry.height - 1, "hotcorner-bottomright");
 
         this.on_configured ();
     }
 
-    private void remove_all_hot_corners () {
-        hot_corners.@foreach ((hot_corner) => {
-            hot_corner.destroy_barriers ();
-        });
+    private void add_hotcorner (float x, float y, string key) {
+        unowned Clutter.Actor? stage = wm.get_display ().get_stage ();
+        return_if_fail (stage != null);
 
-        hot_corners.remove_range (0, hot_corners.length);
-    }
+        var action = (ActionType) behavior_settings.get_enum (key);
+        Clutter.Actor? hot_corner = stage.find_child_by_name (key);
 
-    private void add_hotcorner (float x, float y, string hot_corner_position) {
-        var action_type = (ActionType) behavior_settings.get_enum (hot_corner_position);
-        if (action_type == ActionType.NONE) {
+        if (action == ActionType.NONE) {
+            if (hot_corner != null)
+                stage.remove_child (hot_corner);
             return;
         }
 
-        unowned Meta.Display display = wm.get_display ();
-        var hot_corner = new HotCorner (display, (int) x, (int) y, hot_corner_position);
+        // if the hot corner already exists, just reposition it, create it otherwise
+        if (hot_corner == null) {
+            hot_corner = new Clutter.Actor ();
+            hot_corner.width = 1;
+            hot_corner.height = 1;
+            hot_corner.opacity = 0;
+            hot_corner.reactive = true;
+            hot_corner.name = key;
 
-        hot_corner.trigger.connect (() => {
-            if (action_type == ActionType.CUSTOM_COMMAND) {
-                run_custom_action (hot_corner_position);
-            } else {
-                wm.perform_action (action_type);
-            }
-        });
+            stage.add_child (hot_corner);
 
-        hot_corners.add (hot_corner);
+            hot_corner.enter_event.connect ((actor, event) => {
+                var hot_corner_name = actor.name;
+                var action_type = (ActionType) behavior_settings.get_enum (hot_corner_name);
+
+                if (action_type == ActionType.CUSTOM_COMMAND) {
+                    run_custom_action (hot_corner_name);
+                } else {
+                    wm.perform_action (action_type);
+                }
+                return false;
+            });
+        }
+
+        hot_corner.x = x;
+        hot_corner.y = y;
     }
 
     private void run_custom_action (string hot_corner_position) {
