@@ -165,61 +165,61 @@ endif
 # ----------------------------------------------------------------------
 
 if mutter43_dep.found()
-	cogl_target = custom_target('mutter-cogl-11',
+	cogl_target = custom_target('mutter-cogl-12',
 		command: [
 			vapigen,
-			mutter_typelib_dir / 'Cogl-11.gir',
-			'--library=mutter-cogl-11',
+			mutter_typelib_dir / 'Cogl-12.gir',
+			'--library=mutter-cogl-12',
 			'--pkg=gobject-2.0',
 			'--pkg=cairo',
 			'--pkg=graphene-gobject-1.0',
 			vapigen_args,
-#			files('Cogl-9-custom.vala')
+#			files('Cogl-12-custom.vala')
 		],
-		output: 'mutter-cogl-11.vapi'
+		output: 'mutter-cogl-12.vapi'
 	)
 
-	cogl_pango_target = custom_target('mutter-cogl-pango-11',
+	cogl_pango_target = custom_target('mutter-cogl-pango-12',
 		command: [
 			vapigen,
-			mutter_typelib_dir / 'CoglPango-11.gir',
-			'--library=mutter-cogl-pango-11',
-			'--pkg=mutter-cogl-11',
+			mutter_typelib_dir / 'CoglPango-12.gir',
+			'--library=mutter-cogl-pango-12',
+			'--pkg=mutter-cogl-12',
 			'--pkg=pangocairo',
 			vapigen_args
 		],
 		depends: cogl_target,
-		output: 'mutter-cogl-pango-11.vapi'
+		output: 'mutter-cogl-pango-12.vapi'
 	)
 
-	clutter_target = custom_target('mutter-clutter-11',
+	clutter_target = custom_target('mutter-clutter-12',
 		command: [
 			vapigen,
-			mutter_typelib_dir / 'Clutter-11.gir',
-			'--library=mutter-clutter-11',
+			mutter_typelib_dir / 'Clutter-12.gir',
+			'--library=mutter-clutter-12',
 			'--pkg=graphene-gobject-1.0',
-			'--pkg=mutter-cogl-11',
-			'--pkg=mutter-cogl-pango-11',
+			'--pkg=mutter-cogl-12',
+			'--pkg=mutter-cogl-pango-12',
 			'--pkg=atk',
 			'--pkg=gio-2.0',
 			'--pkg=json-glib-1.0',
 			'--pkg=pangocairo',
 			vapigen_args,
-#			files('Clutter-10-custom.vala')
+#			files('Clutter-12-custom.vala')
 		],
 		depends: [ cogl_target, cogl_pango_target ],
-		output: 'mutter-clutter-11.vapi'
+		output: 'mutter-clutter-12.vapi'
 	)
 
-	libmutter_target = custom_target('libmutter-11',
+	libmutter_target = custom_target('libmutter-12',
 		command: [
 			vapigen,
-			mutter_typelib_dir / 'Meta-11.gir',
-			'--library=libmutter-11',
+			mutter_typelib_dir / 'Meta-12.gir',
+			'--library=libmutter-12',
 			'--pkg=graphene-gobject-1.0',
-			'--pkg=mutter-cogl-11',
-			'--pkg=mutter-cogl-pango-11',
-			'--pkg=mutter-clutter-11',
+			'--pkg=mutter-cogl-12',
+			'--pkg=mutter-cogl-pango-12',
+			'--pkg=mutter-clutter-12',
 			'--pkg=atk',
 			'--pkg=gio-2.0',
 			'--pkg=json-glib-1.0',
@@ -230,19 +230,19 @@ if mutter43_dep.found()
 			vapigen_args
 		],
 		depends: [ cogl_target, cogl_pango_target, clutter_target ],
-		output: 'libmutter-11.vapi'
+		output: 'libmutter-12.vapi'
 	)
 
 # ----------------------------------------------------------------------
 
-libmutter11_deps_file_symlink_target = \
-  custom_target('libmutter-11-deps-file-symlink-target',
+libmutter12_deps_file_symlink_target = \
+  custom_target('libmutter-12-deps-file-symlink-target',
 		command: [
 		  'ln',  '-sv',
 		  meson.current_source_dir() + '/libmutter.deps',
-		  meson.current_build_dir() + '/libmutter-11.deps'
+		  meson.current_build_dir() + '/libmutter-12.deps'
 		],
 		output: [
-		  'libmutter-11.deps'
+		  'libmutter-12.deps'
 		])
 endif
