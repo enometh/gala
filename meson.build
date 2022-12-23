@@ -72,7 +72,7 @@ add_project_link_arguments(['-Wl,-rpath,@0@'.format(mutter_typelib_dir)], langua
 
 # ----------------------------------------------------------------------
 
-vapigen = find_program('vapigen', required: false)
+vapigen = find_program('vapigen', required: true)
 if vapigen.found()
     subdir('vapi')
 endif
