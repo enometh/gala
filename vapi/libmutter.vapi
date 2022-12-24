@@ -121,10 +121,12 @@ namespace Meta {
 		public static bool is_verbose ();
 		[CCode (cheader_filename = "meta/util.h", cname = "meta_is_wayland_compositor")]
 		public static bool is_wayland_compositor ();
+#if !HAS_MUTTER43
 		[CCode (cheader_filename = "meta/util.h", cname = "meta_later_add")]
 		public static uint later_add (Meta.LaterType when, owned GLib.SourceFunc func);
 		[CCode (cheader_filename = "meta/util.h", cname = "meta_later_remove")]
 		public static void later_remove (uint later_id);
+#endif
 		[CCode (cheader_filename = "meta/util.h", cname = "meta_pop_no_msg_prefix")]
 		public static void pop_no_msg_prefix ();
 		[CCode (cheader_filename = "meta/util.h", cname = "meta_push_no_msg_prefix")]
@@ -160,8 +162,10 @@ namespace Meta {
 	public abstract class Backend : GLib.Object, GLib.Initable {
 		[CCode (has_construct_function = false)]
 		protected Backend ();
+#if !HAS_MUTTER_43
 		[CCode (cheader_filename = "meta/meta-backend.h", cname = "meta_get_backend")]
 		public static unowned Meta.Backend get_backend ();
+#endif
 #if HAS_MUTTER43
 		public Meta.BackendCapabilities get_capabilities ();
 #endif
@@ -333,6 +337,9 @@ namespace Meta {
 		[CCode (has_construct_function = false)]
 		protected Compositor ();
 		public void add_window (Meta.Window window);
+#if HAS_MUTTER43
+		public unowned Clutter.Actor get_feedback_group ();
+#endif
 		public void destroy ();
 		public bool filter_keybinding (Meta.KeyBinding binding);
 		public void flash_display (Meta.Display display);
@@ -455,8 +462,10 @@ namespace Meta {
 		public uint32 get_current_time_roundtrip ();
 		[CCode (cname = "meta_cursor_tracker_get_for_display")]
 		public unowned Meta.CursorTracker get_cursor_tracker ();
+#if !HAS_MUTTER43
 		[CCode (cheader_filename = "meta/compositor-mutter.h", cname = "meta_get_feedback_group_for_display")]
 		public unowned Clutter.Actor get_feedback_group ();
+#endif
 		public unowned Meta.Window get_focus_window ();
 		public Meta.GrabOp get_grab_op ();
 		public uint get_keybinding_action (uint keycode, ulong mask);
@@ -470,7 +479,9 @@ namespace Meta {
 		public string get_pad_action_label (Clutter.InputDevice pad, Meta.PadActionType action_type, uint action_number);
 		public int get_primary_monitor ();
 #if HAS_MUTTER40
+#if !HAS_MUTTER41
 		public unowned Meta.Selection get_selection ();
+#endif
 #endif
 		public void get_size (out int width, out int height);
 		public unowned Meta.SoundPlayer get_sound_player ();
