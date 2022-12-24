@@ -151,6 +151,7 @@ namespace Gala {
                 Meta.Background.refresh_all ();
                 SystemBackground.refresh ();
             });
+//            global.meta_display = display;
         }
 
         private void lost_daemon () {

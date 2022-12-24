@@ -34,6 +34,10 @@ namespace Gala {
         GLib.Intl.textdomain (Config.GETTEXT_PACKAGE);
 
         var ctx = new Meta.Context ("Mutter(Gala)");
+
+        Gala.global = new Gala.Global();
+        Gala.global.context = ctx;
+
         ctx.add_option_entries (Gala.OPTIONS, Config.GETTEXT_PACKAGE);
         try {
             ctx.configure (ref args);
@@ -63,6 +67,7 @@ namespace Gala {
             ctx.terminate ();
             return GLib.Source.REMOVE;
         });
+
 
         try {
             ctx.setup ();
