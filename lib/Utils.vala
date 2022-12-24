@@ -16,6 +16,15 @@
 //
 
 namespace Gala {
+    public class Global {
+        public Meta.Context context;
+//        public Meta.Display meta_display;
+//        public Meta.Plugin plugin;
+//        public Meta.Backend backend;
+    }
+
+    public Gala.Global global;
+
     public class Utils {
         private struct CachedIcon {
             public Gdk.Pixbuf icon;
