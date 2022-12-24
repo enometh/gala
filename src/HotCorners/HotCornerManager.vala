@@ -26,7 +26,8 @@ public class Gala.HotCornerManager : Object {
         Object (wm: wm, behavior_settings: behavior_settings);
 
         behavior_settings.changed.connect (configure);
-        Meta.MonitorManager.@get ().monitors_changed.connect (configure);
+        Gala.global.context.get_backend ().get_monitor_manager()
+            .monitors_changed.connect (configure);
     }
 
     public void configure () {

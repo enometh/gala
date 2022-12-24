@@ -16,6 +16,15 @@
 //
 
 namespace Gala {
+    public class Global {
+        public Meta.Context context;
+//        public Meta.Display meta_display;
+//        public Meta.Plugin plugin;
+//        public Meta.Backend backend;
+    }
+
+    public Gala.Global global;
+
     public class Utils {
         private struct CachedIcon {
             public Gdk.Pixbuf icon;
@@ -322,12 +331,14 @@ namespace Gala {
         public static void bell (Meta.Display display) {
             if (Meta.Prefs.bell_is_audible ())
                 Gdk.beep ();
-            else
-                display.get_compositor ().flash_display (display);
+            else {
+                //;madhu 221223 get_compositor gonn
+                // display.get_compositor ().flash_display (display);
+            }
         }
 
         public static int get_ui_scaling_factor () {
-            return Meta.Backend.get_backend ().get_settings ().get_ui_scaling_factor ();
+            return Gala.global.context.get_backend ().get_settings ().get_ui_scaling_factor ();
         }
 
         /**

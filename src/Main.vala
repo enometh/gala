@@ -64,6 +64,11 @@ namespace Gala {
             ctx.terminate ();
             return GLib.Source.REMOVE;
         });
+
+        Gala.global = new Gala.Global();
+        Gala.global.context = ctx;
+
+
 #else
         unowned OptionContext ctx = Meta.get_option_context ();
         ctx.add_main_entries (Gala.OPTIONS, null);

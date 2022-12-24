@@ -328,7 +328,8 @@ namespace Gala {
         }
 
         public static int get_ui_scaling_factor () {
-            return Meta.Backend.get_backend ().get_settings ().get_ui_scaling_factor ();
+            return Gala.global.context.get_backend ().get_settings ()
+                .get_ui_scaling_factor ();
         }
 
         /**

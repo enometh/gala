@@ -147,6 +147,7 @@ namespace Gala {
                 Meta.Background.refresh_all ();
                 SystemBackground.refresh ();
             });
+//            global.meta_display = display;
         }
 
         void lost_daemon () {
@@ -191,8 +192,8 @@ namespace Gala {
             var background_settings = new GLib.Settings ("org.gnome.desktop.background");
             var color = background_settings.get_string ("primary-color");
             stage.background_color = Clutter.Color.from_string (color);
-
-            Meta.Util.later_add (Meta.LaterType.BEFORE_REDRAW, () => {
+            display.get_compositor ().get_laters ()
+                .add (Meta.LaterType.BEFORE_REDRAW, () => {
                 WorkspaceManager.init (this);
                 return false;
             });
@@ -284,7 +285,8 @@ namespace Gala {
             var shadow_settings = new GLib.Settings (Config.SCHEMA + ".shadows");
             shadow_settings.changed.connect (InternalUtils.reload_shadow);
 
-            Meta.MonitorManager.@get ().monitors_changed.connect (on_monitors_changed);
+            Gala.global.context.get_backend ().get_monitor_manager ()
+                .monitors_changed.connect (on_monitors_changed);
 
             hot_corner_manager = new HotCornerManager (this, behavior_settings);
             hot_corner_manager.on_configured.connect (update_input_area);

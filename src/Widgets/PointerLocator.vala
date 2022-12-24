@@ -55,7 +55,8 @@ namespace Gala {
             pivot.init (0.5f, 0.5f);
             pivot_point = pivot;
 
-            Meta.MonitorManager.@get ().monitors_changed.connect (update_surface);
+            Gala.global.context.get_backend ().get_monitor_manager ()
+                .monitors_changed.connect (update_surface);
         }
 
         private void update_surface () {

@@ -101,7 +101,7 @@ namespace Gala {
                 variant = variant + ",";
             }
 
-            Meta.Backend.get_backend ().set_keymap (layout, variant, options);
+            Gala.global.context.get_backend ().set_keymap (layout, variant, options);
         }
     }
 }

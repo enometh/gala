@@ -76,7 +76,7 @@ namespace Gala {
                 create_components ();
             });
 
-            Meta.MonitorManager.@get ().monitors_changed.connect (() => {
+            Gala.global.context.get_backend().get_monitor_manager() .monitors_changed.connect (() => {
                 var cur_scale = InternalUtils.get_ui_scaling_factor ();
                 if (cur_scale != scaling_factor) {
                     scaling_factor = cur_scale;

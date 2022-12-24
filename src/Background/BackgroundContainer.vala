@@ -27,7 +27,8 @@ namespace Gala {
         }
 
         construct {
-            Meta.MonitorManager.@get ().monitors_changed.connect (update);
+            Gala.global.context.get_backend ().get_monitor_manager ()
+                .monitors_changed.connect (update);
 
             reactive = true;
             button_release_event.connect ((event) => {
@@ -40,7 +41,8 @@ namespace Gala {
         }
 
         ~BackgroundContainer () {
-            Meta.MonitorManager.@get ().monitors_changed.disconnect (update);
+            Gala.global.context.get_backend ().get_monitor_manager ()
+                .monitors_changed.disconnect (update);
         }
 
         void update () {

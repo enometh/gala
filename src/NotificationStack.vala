@@ -42,7 +42,7 @@ public class Gala.NotificationStack : Object {
     construct {
         notifications = new Gee.ArrayList<unowned Meta.WindowActor> ();
 
-        Meta.MonitorManager.@get ().monitors_changed_internal.connect (update_stack_allocation);
+        Gala.global.context.get_backend ().get_monitor_manager () .monitors_changed_internal.connect (update_stack_allocation);
         display.workareas_changed.connect (update_stack_allocation);
         update_stack_allocation ();
     }
