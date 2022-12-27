@@ -1,0 +1,9 @@
+
+* mutter-vapi-gen
+
+** synopsis
+#+begin_src shell
+meson build
+ninja -C build -t targets
+ninja -C build vapi/libmutter-9.vapi
+#+end_src
