@@ -95,7 +95,7 @@ namespace Gala {
                 if (cur_scale != scaling_factor) {
                     scaling_factor = cur_scale;
                     canvas.scale_factor = scaling_factor;
-                    effect.scale_factor = scaling_factor;
+                    //madhu 230502  effect.scale_factor = scaling_factor;
                     create_components ();
                 }
             });
