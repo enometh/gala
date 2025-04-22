@@ -59,6 +59,21 @@ if mutter43_dep.found()
 		     ]
 endif
 
+mutter48_dep = dependency('libmutter-16', version: ['>= 48', '< 49'], required: false)
+if mutter48_dep.found()
+	libmutter_dep = dependency('libmutter-16', version: '>= 43')
+	mutter_dep = [
+		libmutter_dep,
+                dependency('mutter-mtk-16'),
+		dependency('mutter-cogl-16'),
+                #dependency('mutter-cogl-pango-16'),
+		dependency('mutter-clutter-16')
+	]
+	vala_flags = ['--define', 'HAS_MUTTER338', '--define', 'HAS_MUTTER40', '--define', 'HAS_MUTTER41',
+		      '--define', 'HAS_MUTTER42'
+		     ]
+endif
+
 # ----------------------------------------------------------------------
 
 if mutter_dep.length() == 0
